@@ -19,9 +19,8 @@ function App() {
     return (
 
 
-        // <div>
-        //     Привет, {user?.first_name}💕
-        // </div>
+        <div>
+        </div>
 
 
 
