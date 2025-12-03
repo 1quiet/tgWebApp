@@ -1,35 +1,133 @@
+import { useEffect, useState } from 'react';
+import './style.css';
 
 function App() {
-    window.Telegram?.WebApp?.ready();
+    const [user, setUser] = useState<any>(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [isAutoScroll, setIsAutoScroll] = useState(false);
+    const totalSlides = 20;
 
-    // const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
-    // const theme = window.Telegram?.WebApp?.themeParams;
+    // Инициализация Telegram
+    useEffect(() => {
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
 
-    // Используем цвета из темы Telegram
-    // const bgColor = theme?.bg_color || '#0a0a0a';
-    // const textColor = theme?.text_color || '#ffffff';
-    // const buttonColor = theme?.button_color || '#3b82f6';
-    // const linkColor = theme?.link_color || '#06b6d4';
-    // const hintColor = theme?.hint_color || '#6b7280';
+            const userData = tg.initDataUnsafe?.user;
+            if (userData) {
+                setUser(userData);
+            }
 
+            // Настройка темы
+            document.documentElement.style.setProperty('--tg-bg-color', tg.themeParams?.bg_color || '#ffffff');
+            document.documentElement.style.setProperty('--tg-text-color', tg.themeParams?.text_color || '#000000');
+        }
+    }, []);
 
+    // Автопрокрутка
+    useEffect(() => {
+        let interval: any;
 
+        if (isAutoScroll) {
+            interval = setInterval(() => {
+                setCurrentSlide(prev => {
+                    const next = prev + 1;
+                    if (next >= totalSlides) {
+                        clearInterval(interval);
+                        setIsAutoScroll(false);
+                        return 0;
+                    }
+                    return next;
+                });
+            }, 1000);
+        }
 
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [isAutoScroll, totalSlides]);
+
+    const startAutoScroll = () => {
+        setIsAutoScroll(true);
+        // Вибрация если есть
+        window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.('light');
+    };
+
+    const stopAutoScroll = () => {
+        setIsAutoScroll(false);
+    };
+
+    const resetApp = () => {
+        setCurrentSlide(0);
+        setIsAutoScroll(false);
+    };
+
+    // Расчет смещения для слайдера
+    const sliderStyle = {
+        transform: `translateX(-${currentSlide * 120}px)`,
+    };
 
     return (
+        <div className="app">
+            {/* Приветствие */}
+            <div className="welcome-cont">
+                {user ? (
+                    <div>
+                        Приветствую, <strong>{user.first_name}</strong>!<br />
+                        Здесь ты узнаешь что-то...
+                        <p>Нажимай на "Старт" и внимай</p>
+                    </div>
+                ) : (
+                    <div>Загрузка пользователя...</div>
+                )}
+            </div>
 
+            {/* Слайдер */}
+            <div className="main-conts">
+                <div className="main-conts-track" style={sliderStyle}>
+                    {Array.from({ length: totalSlides }).map((_, index) => (
+                        <div key={index} className="main-conts__container">
+                            {index + 1}
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-        <div>
+            {/* Кнопки управления */}
+            <div className="controls">
+                <button
+                    id="startBtn"
+                    onClick={startAutoScroll}
+                    className="control-button"
+                >
+                    Старт
+                </button>
+
+                <button
+                    id="stopBtn"
+                    onClick={stopAutoScroll}
+                    className="control-button"
+                >
+                    Стоп
+                </button>
+
+                <button
+                    id="reset-button"
+                    onClick={resetApp}
+                    className="control-button"
+                >
+                    Сброс
+                </button>
+            </div>
+
+            {/* Индикатор текущего слайда */}
+            <div className="slide-indicator">
+                Слайд: {currentSlide + 1} / {totalSlides}
+                {isAutoScroll && " (Автопрокрутка)"}
+            </div>
         </div>
-
-
-
-
-
-
-
-
-    )
+    );
 }
 
-export default App
+export default App;

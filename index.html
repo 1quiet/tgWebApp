@@ -4,68 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <link rel="stylesheet" href="src/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet">
-  <title>tgapp</title>
-  <script src="src/js.js"></script>
+  <title>TG App</title>
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-
-  <!-- -------------------------Begin of the JSX code----------------------------------------------------- -->
-  <div class="welcome-cont">
-    <div>Приветствую, {user.first_name}<br>Здесь ты узнаешь что-то...
-      <p>Нажимай на "Старт" и внимай</p>
-    </div>
-  </div>
-
-  <div class="main-conts">
-    <div class="main-conts-track" id="sliderTrack">
-      <div class="main-conts__container">
-        1
-      </div>
-      <div class="main-conts__container">
-        2
-      </div>
-      <div class="main-conts__container">
-        3
-      </div>
-      <div class="main-conts__container">
-        4
-      </div>
-      <div class="main-conts__container">
-        5
-      </div>
-      <div class="main-conts__container">
-        6
-      </div>
-      <div class="main-conts__container">
-        7
-      </div>
-      <div class="main-conts__container">
-        8
-      </div>
-      <div class="main-conts__container">
-        9
-      </div>
-      <div class="main-conts__container">
-        10
-      </div>
-    </div>
-  </div>
-
-  <button id="startBtn" onclick="startAutoScroll()"
-    style="font-family: Anonimous Pro, monospace; font-size: x-large;">Старт</button>
-  <button id="stopBtn" onclick="stopAutoScroll()"
-    style="font-family: Anonimous Pro, monospace; font-size: x-large;">Стоп</button>
 </body>
 
 </html>
