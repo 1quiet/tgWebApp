@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import './style.css';
+import { useEffect, useState } from 'react'; // подключаем хуки (useEffect для побочных эффектов, useState для состояния)
+import './style.css'; // ну это понятно
 
 function App() {
-    const [user, setUser] = useState<any>(null);
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [isAutoScroll, setIsAutoScroll] = useState(false);
-    const totalSlides = 20;
+    const [user, setUser] = useState<any>(null); // создаем переменные для хранения инфы о пользователе
+    const [currentSlide, setCurrentSlide] = useState(0); // целочисленные переменнные [0-19] для хранения инфы о текущем слайде (но работает только на компе, с телефона другое маштабирование идет и там сбивается прокрутка)
+    const [isAutoScroll, setIsAutoScroll] = useState(false); // активна ли прокрутка сейчас 
+    const totalSlides = 20; // константное количество слайдов 
 
     // Инициализация Telegram
     useEffect(() => {
